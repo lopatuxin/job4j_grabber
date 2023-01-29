@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 import static org.quartz.JobBuilder.*;
@@ -37,7 +35,8 @@ public class AlertRabbit {
     }
 
     public static void main(String[] args) {
-        try (Connection connection = connection(load())) {
+        Properties pr = load();
+        try (Connection connection = connection(pr)) {
             Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
             scheduler.start();
             JobDataMap data = new JobDataMap();
@@ -46,14 +45,14 @@ public class AlertRabbit {
                     .usingJobData(data)
                     .build();
             SimpleScheduleBuilder times = simpleSchedule()
-                    .withIntervalInSeconds(Integer.parseInt(load().getProperty("rabbit.interval")))
+                    .withIntervalInSeconds(Integer.parseInt(pr.getProperty("rabbit.interval")))
                     .repeatForever();
             Trigger trigger = newTrigger()
                     .startNow()
                     .withSchedule(times)
                     .build();
             scheduler.scheduleJob(job, trigger);
-            Thread.sleep(Integer.parseInt(load().getProperty("Thread.sleep")));
+            Thread.sleep(Integer.parseInt(pr.getProperty("Thread.sleep")));
             scheduler.shutdown();
         } catch (Exception se) {
             se.printStackTrace();
