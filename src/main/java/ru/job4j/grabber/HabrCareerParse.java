@@ -10,11 +10,11 @@ import java.io.IOException;
 
 public class HabrCareerParse {
     private static final String SOURCE_LINK = "https://career.habr.com";
-    private static String page_link = "";
+    private static final int MAX_PAGE = 5;
 
     public static void main(String[] args) throws IOException {
-        for (int i = 0; i < 6; i++) {
-            page_link = String.format("%s/vacancies/java_developer?page=%s", SOURCE_LINK, i);
+        for (int i = 0; i <= MAX_PAGE; i++) {
+            String page_link = String.format("%s/vacancies/java_developer?page=%s", SOURCE_LINK, i);
             Connection connection = Jsoup.connect(page_link);
             Document document = connection.get();
             Elements rows = document.select(".vacancy-card__inner");
