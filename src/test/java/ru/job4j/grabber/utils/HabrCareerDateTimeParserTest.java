@@ -12,14 +12,16 @@ class HabrCareerDateTimeParserTest {
     @Test
     void whenParseTrue() {
         HabrCareerDateTimeParser parser = new HabrCareerDateTimeParser();
-        String date = LocalDateTime.now().toString();
-        assertThat(LocalDateTime.now().isEqual(parser.parse(date)));
+        String date = "2023-01-29T20:27:33+03:00";
+        LocalDateTime expected = LocalDateTime.of(2023, 01, 29, 20, 27, 33);
+        assertThat(expected.isEqual(parser.parse(date)));
     }
 
     @Test
     void whenParseFalse() {
         HabrCareerDateTimeParser parser = new HabrCareerDateTimeParser();
         String date = "2023-01-29T20:27:33+03:00";
-        assertFalse(LocalDateTime.now().isEqual(parser.parse(date)));
+        LocalDateTime expected = LocalDateTime.of(2023, 03, 29, 20, 27, 33);
+        assertFalse(expected.isEqual(parser.parse(date)));
     }
 }
