@@ -12,6 +12,19 @@ public class HabrCareerParse {
     private static final String SOURCE_LINK = "https://career.habr.com";
     private static final int MAX_PAGE = 5;
 
+    private String retrieveDescription(String link) {
+        String allLink = String.format("%s%s", SOURCE_LINK, link);
+        String rs = "";
+        try {
+            Connection connection = Jsoup.connect(allLink);
+            Document document = connection.get();
+            rs = document.select(".basic-section--appearance-vacancy-description").text();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
     public static void main(String[] args) throws IOException {
         for (int i = 1; i <= MAX_PAGE; i++) {
             String page_link = String.format("%s/vacancies/java_developer?page=%s", SOURCE_LINK, i);
