@@ -72,13 +72,13 @@ public class Post {
         Post post = (Post) o;
 
         if (id != post.id) return false;
-        return title != null ? title.equals(post.title) : post.title == null;
+        return link != null ? link.equals(post.link) : post.link == null;
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (link != null ? link.hashCode() : 0);
         return result;
     }
 }
