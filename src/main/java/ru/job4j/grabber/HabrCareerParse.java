@@ -27,7 +27,7 @@ public class HabrCareerParse implements Parse {
         try {
             Connection connection = Jsoup.connect(allLink);
             Document document = connection.get();
-            rs = document.select(".basic-section--appearance-vacancy-description").text();
+            rs = document.select(".vacancy-description__text").text();
         } catch (IOException e) {
             e.printStackTrace();
         }
