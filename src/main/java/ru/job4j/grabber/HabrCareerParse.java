@@ -45,11 +45,14 @@ public class HabrCareerParse implements Parse {
     }
 
     private Post getPost(Element element) {
+        Element title = element.select(".vacancy-card__title").first();
+        String link = String.format("%s%s", SOURCE_LINK, title.child(0).attr("href"));
         return new Post(
-                element.select(".vacancy-card__title").first().text(),
-                element.child(0).attr("href"),
-                retrieveDescription(element.child(0).attr("href")),
-                dateTimeParser.parse(element.select(".vacancy-card__date").first().child(0).attr("datetime"))
+                title.text(),
+                link,
+                retrieveDescription(link),
+                dateTimeParser.parse(element.select(".vacancy-card__date")
+                        .first().child(0).attr("datetime"))
         );
     }
 
