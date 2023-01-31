@@ -3,6 +3,7 @@ package ru.job4j.grabber;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import ru.job4j.grabber.utils.DateTimeParser;
 import ru.job4j.grabber.utils.HabrCareerDateTimeParser;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HabrCareerParse implements Parse {
-    private static final String SOURCE_LINK = "https://career.habr.com";
+    private static final String SOURCE_LINK = "https://career.habr.com/vacancies/java_developer?page=";
     private static final int MAX_PAGE = 5;
 
     private final DateTimeParser dateTimeParser;
@@ -34,23 +35,26 @@ public class HabrCareerParse implements Parse {
         return rs;
     }
 
+    private Post getPost(Element element) {
+        return new Post(
+                element.select(".vacancy-card__title").first().text(),
+                element.child(0).attr("href"),
+                retrieveDescription(element.child(0).attr("href")),
+                dateTimeParser.parse(element.select(".vacancy-card__date").first().child(0).attr("datetime"))
+        );
+    }
+
     @Override
     public List<Post> list(String link) {
         List<Post> list = new ArrayList<>();
         try {
             for (int i = 1; i <= MAX_PAGE; i++) {
-                String page_link = String.format("%s%s%s", SOURCE_LINK, link, i);
+                String page_link = String.format("%s%s", link, i);
                 Connection connection = Jsoup.connect(page_link);
                 Document document = connection.get();
                 Elements rows = document.select(".vacancy-card__inner");
                 rows.forEach(row -> {
-                     Post post = new Post(
-                             row.select(".vacancy-card__title").first().text(),
-                             row.child(0).attr("href"),
-                             retrieveDescription(row.child(0).attr("href")),
-                             dateTimeParser.parse(row.select(".vacancy-card__date").first().child(0).attr("datetime"))
-                     );
-                     list.add(post);
+                    list.add(getPost(row));
                 });
             }
         } catch (IOException e) {
@@ -61,7 +65,7 @@ public class HabrCareerParse implements Parse {
 
     public static void main(String[] args) {
         HabrCareerParse habrCareerParse = new HabrCareerParse(new HabrCareerDateTimeParser());
-        List<Post> listPosts = habrCareerParse.list("/vacancies/java_developer?page=");
+        List<Post> listPosts = habrCareerParse.list("https://career.habr.com/vacancies/java_developer?page=");
         for (Post post : listPosts) {
             System.out.println(post.getTitle());
         }
