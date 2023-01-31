@@ -23,25 +23,15 @@ public class HabrCareerParse implements Parse {
     }
 
     private String retrieveDescription(String link) {
-
         String rs = "";
-
         try {
-
             Connection connection = Jsoup.connect(link);
-
             Document document = connection.get();
-
             rs = document.select(".vacancy-description__text").text();
-
         } catch (IOException e) {
-
             e.printStackTrace();
-
         }
-
         return rs;
-
     }
 
     private Post getPost(Element element) {
