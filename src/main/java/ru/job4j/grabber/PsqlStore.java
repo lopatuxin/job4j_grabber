@@ -1,6 +1,5 @@
 package ru.job4j.grabber;
 
-import ru.job4j.grabber.utils.DateTimeParser;
 import ru.job4j.grabber.utils.HabrCareerDateTimeParser;
 
 import java.io.FileInputStream;
@@ -14,8 +13,7 @@ public class PsqlStore implements Store {
     private Connection connection;
 
     public PsqlStore(Properties cfg) {
-        try (InputStream in = new FileInputStream("src/main/resources/rabbit.properties")) {
-            cfg.load(in);
+        try {
             Class.forName(cfg.getProperty("driver-name"));
             connection = DriverManager.getConnection(
                     cfg.getProperty("url"),
@@ -28,20 +26,16 @@ public class PsqlStore implements Store {
     }
 
     private Post getPost(ResultSet rs) throws SQLException {
-        return new Post(
-          rs.getInt(1),
-          rs.getString(2),
-          rs.getString(3),
-          rs.getString(4),
-          rs.getTimestamp(5).toLocalDateTime()
-        );
+        return new Post(rs.getInt("id"), rs.getString("name"),
+                rs.getString("text"), rs.getString("link"),
+                rs.getTimestamp("created").toLocalDateTime());
     }
 
     @Override
     public void save(Post post) {
         try (PreparedStatement ps = connection.prepareStatement(
                 "insert into post (name, text, link, created) " +
-                        "values (?, ?, ?, ?) on conflict (link) do nothing;")) {
+                        "values (?, ?, ?, ?) on conflict (link) do nothing;", Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, post.getTitle());
             ps.setString(2, post.getDescription());
             ps.setString(3, post.getLink());
@@ -97,16 +91,19 @@ public class PsqlStore implements Store {
 
     public static void main(String[] args) {
         Properties config = new Properties();
-        PsqlStore ps = new PsqlStore(config);
-        HabrCareerParse hcp = new HabrCareerParse(new HabrCareerDateTimeParser());
-        List<Post> listPosts = hcp.list("https://career.habr.com/vacancies/java_developer?page=");
-        ps.save(listPosts.get(12));
-        ps.save(listPosts.get(15));
-        ps.save(listPosts.get(2));
-        System.out.println(ps.findById(2));
-        listPosts = ps.getAll();
-        for (Post post : listPosts) {
-            System.out.println(post);
+        try (PsqlStore ps = new PsqlStore(config)) {
+            HabrCareerParse hcp = new HabrCareerParse(new HabrCareerDateTimeParser());
+            List<Post> listPosts = hcp.list("https://career.habr.com/vacancies/java_developer?page=");
+            ps.save(listPosts.get(12));
+            ps.save(listPosts.get(15));
+            ps.save(listPosts.get(2));
+            System.out.println(ps.findById(2));
+            listPosts = ps.getAll();
+            for (Post post : listPosts) {
+                System.out.println(post);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
