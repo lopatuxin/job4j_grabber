@@ -39,6 +39,7 @@ public class Grabber implements Grab {
         JobDataMap data = new JobDataMap();
         data.put("store", store);
         data.put("parse", parse);
+        data.put("link", config.getProperty("link"));
         JobDetail job = newJob(GrabJob.class)
                 .usingJobData(data)
                 .build();
