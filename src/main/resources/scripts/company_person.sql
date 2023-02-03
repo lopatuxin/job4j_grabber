@@ -19,14 +19,11 @@ insert into person
 values (1, 'Anton', 1), (2, 'Bob', 1), (3, 'Bill', 2), (4, 'Rob', 2), (5, 'Vas', 3), (6, 'Aleks', 4);
 
 --1
-select name from person
+select person.name, company.name from person
+join company on company_id = company.id
 where id = 5 and company_id is null;
 
 --2
-select person.name, company.name from person
-join company on company_id = company.id;
-
---3
 select c.name, count(p.name) as Количество
 from company c
 join person p on p.company_id = c.id
