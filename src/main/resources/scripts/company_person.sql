@@ -20,8 +20,8 @@ values (1, 'Anton', 1), (2, 'Bob', 1), (3, 'Bill', 2), (4, 'Rob', 2), (5, 'Vas',
 
 --1
 select person.name, company.name from person
-join company on company_id = company.id
-where id = 5 and company_id is null;
+left join company on company_id = company.id
+where company_id is null and person.id = 5;
 
 --2
 select c.name, count(p.name) as Количество
