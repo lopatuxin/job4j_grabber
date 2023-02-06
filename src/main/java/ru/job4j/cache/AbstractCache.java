@@ -15,7 +15,7 @@ public abstract class AbstractCache<K, V> {
         V value =  cache.getOrDefault(key, new SoftReference<>(null)).get();
         if (value == null) {
             value = load(key);
-            cache.put(key, new SoftReference<>(value));
+            put(key, value);
         }
         return value;
     }
