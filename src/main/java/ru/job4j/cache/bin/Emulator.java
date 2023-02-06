@@ -1,12 +1,14 @@
-package ru.job4j.cache;
+package ru.job4j.cache.bin;
+
+import ru.job4j.cache.DirFileCache;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Emulator {
-    public static final Integer LOAD_IN_CASH = 1;
-    public static final Integer GET_FROM_CASH = 2;
+    public static final int LOAD_IN_CASH = 1;
+    public static final int GET_FROM_CASH = 2;
     public static final String MENU = """
                 Введите 1, чтобы загрузить содержимое файла в кэш.
                 Введите 2, чтобы получить содержимое файла из кэша.
