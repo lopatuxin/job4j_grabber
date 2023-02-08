@@ -16,7 +16,7 @@ public class Cinema3DTest {
             Cinema cinema = new Cinema3D();
             Calendar date = Calendar.getInstance();
             Ticket ticket = cinema.buy(account, 1, 1, date);
-            assertThat(ticket).isEqualTo(new Ticket3D(1, 1));
+            assertThat(ticket).isEqualTo(new Ticket3D());
         }
 
         @Test
