@@ -26,11 +26,11 @@ class GeneratorLibraryTest {
         String template = "I am a ${surname}, Who are ${subject}? ";
         assertThatThrownBy(() ->
                 generator.produce(template, Map.of("name", "Arsentev", "subject", "you"))).
-                isInstanceOf(NotFoundException.class);
+                isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    void whenIllegalArgument() {
+    void whenThreeArgument() {
         Generator generator = new GeneratorLibrary();
         String template = "I am a ${name}{surname}, Who are ${subject}? ";
         assertThatThrownBy(() ->
