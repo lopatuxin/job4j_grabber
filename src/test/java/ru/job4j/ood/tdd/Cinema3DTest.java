@@ -52,7 +52,6 @@ public class Cinema3DTest {
         Account account = new AccountCinema();
         Cinema cinema = new Cinema3D();
         Calendar date = Calendar.getInstance();
-        date.set(2022, 10, 12, 11, 00);
         cinema.buy(account, 1, 1, date);
         assertThatThrownBy(() -> cinema.buy(account, 1, 1, date)).
                 isInstanceOf(IllegalArgumentException.class);
