@@ -24,7 +24,7 @@ public class CSVReport implements Report {
     @Override
     public String generate(Predicate<Employee> filter) {
         try (PrintWriter writer = new PrintWriter(fileName)) {
-            writer.append("Name; Hired; Fired; Salary;")
+            writer.append("Name; Hired; Fired; Salary")
                     .append(System.lineSeparator());
             for (Employee employee : store.findBy(filter)) {
                 writer.append(employee.getName()).append(" ")

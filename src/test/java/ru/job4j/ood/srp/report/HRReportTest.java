@@ -29,12 +29,22 @@ class HRReportTest {
         Report engine = new HRReport(store);
         StringBuilder expect = new StringBuilder()
                 .append("Name; Hired; Fired; Salary;")
+                .append(System.lineSeparator())
+                .append(workers.get(0).getName()).append(" ")
+                .append(workers.get(0).getSalary())
+                .append(System.lineSeparator())
+                .append(workers.get(1).getName()).append(" ")
+                .append(workers.get(1).getSalary())
+                .append(System.lineSeparator())
+                .append(workers.get(2).getName()).append(" ")
+                .append(workers.get(2).getSalary())
+                .append(System.lineSeparator())
+                .append(workers.get(3).getName()).append(" ")
+                .append(workers.get(3).getSalary())
+                .append(System.lineSeparator())
+                .append(workers.get(4).getName()).append(" ")
+                .append(workers.get(4).getSalary())
                 .append(System.lineSeparator());
-        for (Employee worker : workers) {
-            expect.append(worker.getName()).append(" ")
-                    .append(worker.getSalary())
-                    .append(System.lineSeparator());
-        }
         assertThat(engine.generate(em -> true)).isEqualTo(expect.toString());
     }
 }
