@@ -9,12 +9,18 @@ public abstract class AbstractStore implements Store {
     private List<Food> foods = new ArrayList<>();
 
     @Override
-    public void add(Food food) {
-        foods.add(food);
+    public boolean add(Food food) {
+        if (!isSuitable(food)) {
+            return false;
+        }
+        return foods.add(food);
     }
 
     @Override
     public List<Food> getFoods() {
-        return this.foods;
+        List<Food> list = this.foods;
+        return list;
     }
+
+    protected abstract boolean isSuitable(Food food);
 }

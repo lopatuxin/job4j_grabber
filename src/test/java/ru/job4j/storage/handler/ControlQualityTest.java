@@ -9,14 +9,17 @@ import ru.job4j.storage.store.Warehouse;
 import ru.job4j.storage.tools.GetPercent;
 
 import java.time.LocalDate;
-import java.util.Map;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
 class ControlQualityTest {
 
     @Test
-    void checkDistribution() {
+    void whenDistributionIsWarehouse() {
+        GetPercent getPercent = new GetPercent();
+        List<Store> storeList = List.of(new Warehouse(getPercent));
+        ControlQuality controlQuality = new ControlQuality(storeList);
         Food meat = new Food(
                 "Meat",
                 500.0,
@@ -24,6 +27,14 @@ class ControlQualityTest {
                 LocalDate.of(2023, 02, 20),
                 LocalDate.of(2023, 02, 11)
         );
+        Store expected = controlQuality.distribution(meat);
+        assertThat(expected).isExactlyInstanceOf(Warehouse.class);
+    }
+    @Test
+    void whenDistributionIsShop() {
+        GetPercent getPercent = new GetPercent();
+        List<Store> storeList = List.of(new Shop(getPercent));
+        ControlQuality controlQuality = new ControlQuality(storeList);
         Food milk = new Food(
                 "Milk",
                 100,
@@ -31,6 +42,15 @@ class ControlQualityTest {
                 LocalDate.of(2023, 02, 25),
                 LocalDate.of(2023, 01, 01)
         );
+        Store expected = controlQuality.distribution(milk);
+        assertThat(expected).isExactlyInstanceOf(Shop.class);
+    }
+
+    @Test
+    void whenDistributionIsTrash() {
+        GetPercent getPercent = new GetPercent();
+        List<Store> storeList = List.of(new Trash(getPercent));
+        ControlQuality controlQuality = new ControlQuality(storeList);
         Food apple = new Food(
                 "Apple",
                 125,
@@ -38,32 +58,7 @@ class ControlQualityTest {
                 LocalDate.of(2023, 01, 25),
                 LocalDate.of(2023, 01, 9)
         );
-        Map<String, Store> stores = Map.of(
-                "Shop", new Shop(), "Trash", new Trash(), "Warehouse", new Warehouse());
-        GetPercent getPercent = new GetPercent();
-        ControlQuality controlQuality = new ControlQuality(getPercent, stores);
-        controlQuality.distribution(meat);
-        controlQuality.distribution(milk);
-        controlQuality.distribution(apple);
-        assertThat(stores.get("Warehouse").getFoods().get(0)).isEqualTo(meat);
-        assertThat(stores.get("Shop").getFoods().get(0)).isEqualTo(milk);
-        assertThat(stores.get("Trash").getFoods().get(0)).isEqualTo(apple);
-    }
-
-    @Test
-    void whenDiscount() {
-        Food meat = new Food(
-                "Meat",
-                500.0,
-                150.0,
-                LocalDate.of(2023, 02, 13),
-                LocalDate.of(2023, 02, 1)
-        );
-        Map<String, Store> stores = Map.of(
-                "Shop", new Shop(), "Trash", new Trash(), "Warehouse", new Warehouse());
-        GetPercent getPercent = new GetPercent();
-        ControlQuality controlQuality = new ControlQuality(getPercent, stores);
-        controlQuality.distribution(meat);
-        assertThat(stores.get("Shop").getFoods().get(0).getPrice()).isEqualTo(350);
+        Store expected = controlQuality.distribution(apple);
+        assertThat(expected).isExactlyInstanceOf(Trash.class);
     }
 }
