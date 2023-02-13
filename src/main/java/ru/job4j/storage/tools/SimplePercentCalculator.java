@@ -2,10 +2,10 @@ package ru.job4j.storage.tools;
 
 import java.time.LocalDate;
 
-public class GetPercent {
+public class SimplePercentCalculator implements PercentCalculator {
     private final LocalDate date;
 
-    public GetPercent() {
+    public SimplePercentCalculator() {
         this.date = LocalDate.now();
     }
 

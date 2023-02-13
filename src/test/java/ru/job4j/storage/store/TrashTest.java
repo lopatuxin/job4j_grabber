@@ -2,7 +2,7 @@ package ru.job4j.storage.store;
 
 import org.junit.jupiter.api.Test;
 import ru.job4j.storage.model.Food;
-import ru.job4j.storage.tools.GetPercent;
+import ru.job4j.storage.tools.SimplePercentCalculator;
 
 import java.time.LocalDate;
 
@@ -11,8 +11,8 @@ import static org.assertj.core.api.Assertions.*;
 class TrashTest {
     @Test
     void whenIsSuitable() {
-        GetPercent getPercent = new GetPercent();
-        Store trash = new Trash(getPercent);
+        SimplePercentCalculator simplePercentCalculator = new SimplePercentCalculator();
+        Store trash = new Trash(simplePercentCalculator);
         Food apple = new Food(
                 "Apple",
                 125,

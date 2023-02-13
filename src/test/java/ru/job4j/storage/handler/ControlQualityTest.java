@@ -6,7 +6,7 @@ import ru.job4j.storage.store.Shop;
 import ru.job4j.storage.store.Store;
 import ru.job4j.storage.store.Trash;
 import ru.job4j.storage.store.Warehouse;
-import ru.job4j.storage.tools.GetPercent;
+import ru.job4j.storage.tools.SimplePercentCalculator;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,8 +17,8 @@ class ControlQualityTest {
 
     @Test
     void whenDistributionIsWarehouse() {
-        GetPercent getPercent = new GetPercent();
-        List<Store> storeList = List.of(new Warehouse(getPercent));
+        SimplePercentCalculator simplePercentCalculator = new SimplePercentCalculator();
+        List<Store> storeList = List.of(new Warehouse(simplePercentCalculator));
         ControlQuality controlQuality = new ControlQuality(storeList);
         Food meat = new Food(
                 "Meat",
@@ -32,8 +32,8 @@ class ControlQualityTest {
     }
     @Test
     void whenDistributionIsShop() {
-        GetPercent getPercent = new GetPercent();
-        List<Store> storeList = List.of(new Shop(getPercent));
+        SimplePercentCalculator simplePercentCalculator = new SimplePercentCalculator();
+        List<Store> storeList = List.of(new Shop(simplePercentCalculator));
         ControlQuality controlQuality = new ControlQuality(storeList);
         Food milk = new Food(
                 "Milk",
@@ -48,8 +48,8 @@ class ControlQualityTest {
 
     @Test
     void whenDistributionIsTrash() {
-        GetPercent getPercent = new GetPercent();
-        List<Store> storeList = List.of(new Trash(getPercent));
+        SimplePercentCalculator simplePercentCalculator = new SimplePercentCalculator();
+        List<Store> storeList = List.of(new Trash(simplePercentCalculator));
         ControlQuality controlQuality = new ControlQuality(storeList);
         Food apple = new Food(
                 "Apple",

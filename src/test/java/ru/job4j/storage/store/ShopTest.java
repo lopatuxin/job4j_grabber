@@ -2,7 +2,7 @@ package ru.job4j.storage.store;
 
 import org.junit.jupiter.api.Test;
 import ru.job4j.storage.model.Food;
-import ru.job4j.storage.tools.GetPercent;
+import ru.job4j.storage.tools.SimplePercentCalculator;
 
 import java.time.LocalDate;
 
@@ -11,8 +11,8 @@ import static org.assertj.core.api.Assertions.*;
 class ShopTest {
     @Test
     void whenIsSuitable() {
-        GetPercent getPercent = new GetPercent();
-        Store shop = new Shop(getPercent);
+        SimplePercentCalculator simplePercentCalculator = new SimplePercentCalculator();
+        Store shop = new Shop(simplePercentCalculator);
         Food milk = new Food(
                 "Milk",
                 100,

@@ -6,12 +6,12 @@ import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.*;
 
-class GetPercentTest {
+class SimplePercentCalculatorTest {
 
     @Test
     void checkGetPercent() {
-        GetPercent getPercent = new GetPercent();
-        double expected = getPercent.getPercent(
+        SimplePercentCalculator simplePercentCalculator = new SimplePercentCalculator();
+        double expected = simplePercentCalculator.getPercent(
                 LocalDate.of(2023, 05, 23), LocalDate.of(2022, 01, 31));
         assertThat(expected).isEqualTo(75);
     }
