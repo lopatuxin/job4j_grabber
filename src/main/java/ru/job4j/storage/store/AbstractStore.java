@@ -21,5 +21,10 @@ public abstract class AbstractStore implements Store {
         return new ArrayList<>(this.foods);
     }
 
+    @Override
+    public void clear() {
+        this.foods.clear();
+    }
+
     protected abstract boolean isSuitable(Food food);
 }

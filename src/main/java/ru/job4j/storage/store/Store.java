@@ -7,4 +7,5 @@ import java.util.List;
 public interface Store {
     boolean add(Food food);
     List<Food> getFoods();
+    public void clear();
 }

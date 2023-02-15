@@ -27,6 +27,7 @@ public class ControlQuality {
         List<Food> foods = new ArrayList<>();
         for (Store store : stores) {
             foods.addAll(store.getFoods());
+            store.clear();
         }
         for (Food food : foods) {
             distribution(food);
