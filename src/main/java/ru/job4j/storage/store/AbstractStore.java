@@ -18,8 +18,7 @@ public abstract class AbstractStore implements Store {
 
     @Override
     public List<Food> getFoods() {
-        List<Food> list = this.foods;
-        return list;
+        return new ArrayList<>(this.foods);
     }
 
     protected abstract boolean isSuitable(Food food);

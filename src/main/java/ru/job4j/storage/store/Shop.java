@@ -1,18 +1,18 @@
 package ru.job4j.storage.store;
 
 import ru.job4j.storage.model.Food;
-import ru.job4j.storage.tools.SimplePercentCalculator;
+import ru.job4j.storage.tools.PercentCalculator;
 
 public class Shop extends AbstractStore {
-    private SimplePercentCalculator simplePercentCalculator;
+    private PercentCalculator calculator;
 
-    public Shop(SimplePercentCalculator simplePercentCalculator) {
-        this.simplePercentCalculator = simplePercentCalculator;
+    public Shop(PercentCalculator calculator) {
+        this.calculator = calculator;
     }
 
     @Override
     protected boolean isSuitable(Food food) {
-        double percent = simplePercentCalculator.getPercent(food.getExpiryDate(), food.getCreateDate());
+        double percent = calculator.getPercent(food.getExpiryDate(), food.getCreateDate());
         boolean res = false;
         if (percent < 75 && percent > 25) {
             res = true;
