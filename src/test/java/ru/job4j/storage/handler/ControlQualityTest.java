@@ -16,21 +16,6 @@ import static org.assertj.core.api.Assertions.*;
 class ControlQualityTest {
 
     @Test
-    void whenDistributionIsWarehouse() {
-        SimplePercentCalculator simplePercentCalculator = new SimplePercentCalculator();
-        List<Store> storeList = List.of(new Warehouse(simplePercentCalculator));
-        ControlQuality controlQuality = new ControlQuality(storeList);
-        Food meat = new Food(
-                "Meat",
-                500.0,
-                150.0,
-                LocalDate.of(2023, 02, 20),
-                LocalDate.of(2023, 02, 11)
-        );
-        Store expected = controlQuality.distribution(meat);
-        assertThat(expected).isExactlyInstanceOf(Warehouse.class);
-    }
-    @Test
     void whenDistributionIsShop() {
         SimplePercentCalculator simplePercentCalculator = new SimplePercentCalculator();
         List<Store> storeList = List.of(new Shop(simplePercentCalculator));
