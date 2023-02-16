@@ -24,35 +24,22 @@ public class SimpleMenu implements Menu {
 
     @Override
     public Optional<MenuItemInfo> select(String itemName) {
-        Optional<ItemInfo> info = findItem(itemName);
-        Optional<MenuItemInfo> result = Optional.empty();
-        if (info.isPresent()) {
-            result = Optional.of(new MenuItemInfo(info.get().menuItem, info.get().number));
-        }
-        return result;
+        return findItem(itemName).map(itemInfo -> new MenuItemInfo(itemInfo.menuItem, itemInfo.number));
     }
 
     @Override
     public Iterator<MenuItemInfo> iterator() {
-        List<ItemInfo> list = new ArrayList<>();
-        DFSIterator iterator = new DFSIterator();
-        while (iterator.hasNext()) {
-            list.add(iterator.next());
-        }
-
         return new Iterator<>() {
-            final Iterator<ItemInfo> items = list.iterator();
-            ItemInfo itemInfo = null;
-
+            DFSIterator iterator = new DFSIterator();
             @Override
             public boolean hasNext() {
-                return items.hasNext();
+                return iterator.hasNext();
             }
 
             @Override
             public MenuItemInfo next() {
-                itemInfo = items.next();
-                return new MenuItemInfo(itemInfo.menuItem, itemInfo.number);
+                ItemInfo info = iterator.next();
+                return new MenuItemInfo(info.menuItem, info.number);
             }
         };
     }
