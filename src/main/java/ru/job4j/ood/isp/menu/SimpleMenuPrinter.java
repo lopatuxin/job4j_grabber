@@ -7,7 +7,7 @@ public class SimpleMenuPrinter implements MenuPrinter {
         menu.forEach(menuItemInfo -> {
             int indentCount = menuItemInfo.getNumber().split("\\.").length - 1;
             for (int i = 1; i <= indentCount; i++) {
-                System.out.println(INDENT);
+                System.out.print(INDENT);
             }
             System.out.println(menuItemInfo.getNumber() + menuItemInfo.getName());
         });
