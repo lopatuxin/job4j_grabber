@@ -55,6 +55,7 @@ public class SimpleMenu implements Menu {
             itemInfo = dfsIterator.next();
             if (name.equals(itemInfo.menuItem.getName())) {
                 optional = Optional.of(itemInfo);
+                break;
             }
         }
         return optional;

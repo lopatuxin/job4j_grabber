@@ -1,18 +1,13 @@
 package ru.job4j.ood.isp.menu;
 
 public class SimpleMenuPrinter implements MenuPrinter {
-    String space = "----";
+    private static final String INDENT = "----";
     @Override
     public void print(Menu menu) {
         menu.forEach(menuItemInfo -> {
-            String[] spl = menuItemInfo.getNumber().split("\\.");
-            int len = spl.length;
-            if (len > 1) {
-                String[] spaceRes = new String[len - 1];
-                for (int i = 0; i < spaceRes.length; i++) {
-                    spaceRes[i] = space;
-                    System.out.print(spaceRes[i]);
-                }
+            int indentCount = menuItemInfo.getNumber().split("\\.").length - 1;
+            for (int i = 1; i <= indentCount; i++) {
+                System.out.println(INDENT);
             }
             System.out.println(menuItemInfo.getNumber() + menuItemInfo.getName());
         });
