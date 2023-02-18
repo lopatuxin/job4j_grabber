@@ -1,8 +1,8 @@
 package ru.job4j.lsp.parking;
 
-public class Auto {
-    private int size;
-    private String name;
+public abstract class Auto {
+    private final int size;
+    private final String name;
 
     public Auto(int size, String name) {
         this.size = size;
