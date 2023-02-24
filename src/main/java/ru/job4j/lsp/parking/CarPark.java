@@ -18,17 +18,17 @@ public class CarPark implements Parking {
 
     @Override
     public boolean add(Auto auto) {
-        if (auto.getSize() > 1 && cargoCounter < cargoCount) {
+        if (auto.getSize() > PassengerAuto.SIZE && cargoCounter < cargoCount) {
             autos.add(auto);
             cargoCounter++;
             return true;
         }
-        if (auto.getSize() == 1 && passengerCounter < passengerCount) {
+        if (auto.getSize() == PassengerAuto.SIZE && passengerCounter < passengerCount) {
             autos.add(auto);
             passengerCounter++;
             return true;
         }
-        if (auto.getSize() > 1
+        if (auto.getSize() > PassengerAuto.SIZE
                 && cargoCounter >= cargoCount
                 && passengerCount - passengerCounter >= auto.getSize()) {
             autos.add(auto);
